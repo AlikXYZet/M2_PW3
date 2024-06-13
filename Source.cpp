@@ -65,14 +65,23 @@ public:
 	{
 		return inRef != (&(V->front()) + index);
 	};
+
+	// Солучение указателя на элемент после последнего элемента вектора (только для сравнения)
+	const int* end() const
+	{
+		return &V->back() + 1;
+	}
 };
 
 
 int main()
 {
+	setlocale(LC_ALL, "Russian");
+
 	// Инициализация вектора с последующей записью и воводом
 	std::vector<int> V1;
 
+	std::cout << "Заполнение вектора:\n";
 	std::cout << "{ ";
 	for (int i = 0; i < 10; i++)
 	{
@@ -81,38 +90,41 @@ int main()
 		if (i != 9)
 			std::cout << ", ";
 	}
-	std::cout << " }" << std::endl;
+	std::cout << " }\n" << std::endl;
 	// ----------------------------------------------------------------------
 
 
 	// Использование const_iterator как "константного forward-итератора"
 	std::vector<int>::const_iterator itV1;
 
+	std::cout << "Вывод элементов вектора через ИНкремент итератора:\n";
 	std::cout << "{";
 	for (itV1 = V1.begin(); itV1 != V1.end(); ++itV1)
 	{
 		std::cout << " " << *itV1 << " ";
 	}
-	std::cout << "}" << std::endl;
+	std::cout << "}\n" << std::endl;
 	// ----------------------------------------------------------------------
 
 
 	// Демонстрация операций над const_iterator, недоступных для "константного forward-итератора"
 	itV1 = V1.end();
 
+	std::cout << "Вывод элементов вектора через ДЕкремент итератора:\n";
 	std::cout << "{";
 	do
 	{
 		itV1--;
 		std::cout << " " << *itV1 << " ";
 	} while (itV1 > V1.begin());
-	std::cout << "}" << std::endl;
+	std::cout << "}\n" << std::endl;
 	// ----------------------------------------------------------------------
 
 
 	// Использование своего итератора cf_it без использования итераторов std::vector
+	std::cout << "Вывод элементов вектора через своего итератора cf_it:\n";
 	std::cout << "{";
-	for (cf_it itV2(V1); itV2 != (&V1.back() + 1); ++itV2)
+	for (cf_it itV2(V1); itV2 != itV2.end(); ++itV2)
 	{
 		std::cout << " " << *itV2 << " ";
 	}
